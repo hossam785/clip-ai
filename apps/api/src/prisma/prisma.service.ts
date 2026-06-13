@@ -47,7 +47,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     }
 
     // Seed User's Gemini API Key
-    const userGeminiKey = 'AIzaSyDkTIC16C9_nKeApm_79iWqh1YJ_zOZORM';
+    const userGeminiKey = 'AIzaSyMockUserApiKeyPlaceholder';
     const userKeyExists = await this.geminiKey.findUnique({ where: { key: userGeminiKey } });
     if (!userKeyExists) {
       await this.geminiKey.create({

@@ -9,7 +9,7 @@ try {
   const db = new Database(dbPath);
   
   // Check if key already exists
-  const key = 'AIzaSyDkTIC16C9_nKeApm_79iWqh1YJ_zOZORM';
+  const key = process.env.GEMINI_API_KEY || 'AIzaSyMockUserApiKeyPlaceholder';
   const row = db.prepare('SELECT * FROM GeminiKey WHERE key = ?').get(key);
   
   if (row) {

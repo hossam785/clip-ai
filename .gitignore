@@ -1,31 +1,56 @@
 # dependencies
-node_modules
+node_modules/
+jspm_packages/
+web_modules/
 
-# nextjs
-.next
-out
+# Next.js build and cache
+.next/
+out/
 
-# turbo
-.turbo
+# NestJS build and cache
+dist/
+build/
+coverage/
+.tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
 
-# logs
+# Turbo
+.turbo/
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# env
+# Environment variables
 .env
 .env.local
-.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
 
-# build
-dist
-build
+# Database / SQLite
+*.db
+*.db-journal
+*.sqlite
+/prisma/dev.db
+/prisma/dev.db-journal
 
-# cache
-.cache
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# vscode
-.vscode
-
-# os
+# OS files
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
