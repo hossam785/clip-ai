@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(24, 24, 27, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-panel-brand {
+  background: rgba(139, 92, 246, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+/* RTL Helpers */
+.dir-ltr {
+  direction: ltr;
+}
+.dir-rtl {
+  direction: rtl;
+}
+
+/* Subtitle active keyframe animations */
+@keyframes activeWordPulse {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.animate-word-active {
+  animation: activeWordPulse 0.3s ease-out;
+}

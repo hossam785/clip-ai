@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../apps/api/node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  role         String    @default("USER") // ADMIN, USER
+  credits      Int       @default(100)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  projects     Project[]
+}
+
+model Project {
+  id              String   @id @default(uuid())
+  name            String
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status          String   @default("DRAFT") // DRAFT, DOWNLOADING, DOWNLOADED, PROCESSING, COMPLETED, FAILED
+  youtubeUrl      String?
+  mode            String   @default("AUTO") // AUTO, MANUAL
+  maxDuration     String   @default("60")
+  effects         Boolean  @default(false)
+  videoTitle      String?
+  videoDuration   String?
+  videoSize       String?
+  videoQuality    String?
+  thumbnailUrl    String?
+  localVideoPath  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  clips           Clip[]
+}
+
+model Clip {
+  id              String   @id @default(uuid())
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title           String
+  description     String   @default("")
+  hashtags        String   @default("")
+  startTime       String
+  endTime         String
+  viralScore      Int      @default(90)
+  engagementScore Int      @default(85)
+  hookScore       Int      @default(88)
+  retentionScore  Int      @default(80)
+  confidenceScore Int      @default(92)
+  duration        String
+  explanation     String   @default("")
+  words           String   @default("") // JSON array of word objects
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model GeminiKey {
+  id            String    @id @default(uuid())
+  key           String    @unique
+  status        String    @default("ACTIVE") // ACTIVE, INACTIVE
+  requestsCount Int       @default(0)
+  successCount  Int       @default(0)
+  failedCount   Int       @default(0)
+  consumption   Int       @default(0)
+  lastUsed      DateTime?
+  errorMessage  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model SystemConfig {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}

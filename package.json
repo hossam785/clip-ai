@@ -1,0 +1,24 @@
+{
+  "name": "clip-ai-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@11.12.1",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=api",
+    "dev:web": "npm run dev --workspace=web",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "prisma:generate": "npx prisma generate",
+    "prisma:push": "npx prisma db push"
+  },
+  "devDependencies": {
+    "prisma": "^7.8.0",
+    "turbo": "^2.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.8.0"
+  }
+}
