@@ -18,8 +18,12 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     try {
+      const secret = process.env.JWT_SECRET;
+      if (!secret) {
+        throw new UnauthorizedException('JWT secret key is not configured');
+      }
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET || 'clip-ai-secret-key-super-secure-2026',
+        secret,
       });
       request.user = payload;
       return true;

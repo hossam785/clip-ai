@@ -85,5 +85,39 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
       console.log(`[Seed] Seeded default admin (admin@clipai.com) and user (user@clipai.com) with password: password123`);
     }
+
+    // Seed subscriptions and credit transaction logs for existing users
+    const allUsers = await this.user.findMany();
+    for (const u of allUsers) {
+      // 1. Subscription
+      const hasSub = await this.subscription.findUnique({ where: { userId: u.id } });
+      if (!hasSub) {
+        const endPeriod = new Date();
+        endPeriod.setFullYear(endPeriod.getFullYear() + 1);
+        await this.subscription.create({
+          data: {
+            userId: u.id,
+            plan: u.role === 'ADMIN' ? 'ENTERPRISE' : 'FREE',
+            status: 'ACTIVE',
+            currentPeriodEnd: endPeriod,
+          },
+        });
+        console.log(`[Seed] Seeded default subscription for user ${u.email}`);
+      }
+
+      // 2. Initial credits log
+      const txCount = await this.creditTransaction.count({ where: { userId: u.id } });
+      if (txCount === 0) {
+        await this.creditTransaction.create({
+          data: {
+            userId: u.id,
+            amount: u.credits,
+            type: 'SIGNUP_BONUS',
+            description: 'Starting wallet credits',
+          },
+        });
+        console.log(`[Seed] Seeded initial credits transaction log for user ${u.email}`);
+      }
+    }
   }
 }

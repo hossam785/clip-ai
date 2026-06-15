@@ -1,6 +1,7 @@
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { I18nProvider } from "@/lib/i18n-context";
+import { ToastProvider } from "../components/ui/Toast";
 
 export const metadata = {
   title: "Clip AI - AI Video Clipping & Reframe SaaS",
@@ -17,7 +18,9 @@ export default function RootLayout({
       <body className="bg-background text-foreground antialiased">
         <I18nProvider>
           <AuthProvider>
-            {children}
+            <ToastProvider>
+              {children}
+            </ToastProvider>
           </AuthProvider>
         </I18nProvider>
       </body>

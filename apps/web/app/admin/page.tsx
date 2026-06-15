@@ -295,6 +295,14 @@ export default function AdminDashboardPage() {
             <Settings className="h-4 w-4" />
             <span>{isRtl ? "تسعير واستهلاك العمليات" : "Process Pricing configs"}</span>
           </button>
+
+          <button
+            onClick={() => router.push("/admin/revenue")}
+            className="w-full text-right p-3.5 rounded-2xl border border-zinc-900 bg-zinc-950/40 text-zinc-450 hover:text-white transition-all flex items-center gap-3 font-semibold text-xs cursor-pointer"
+          >
+            <Coins className="h-4 w-4 text-purple-400" />
+            <span>{isRtl ? "لوحة الإيرادات والأرباح" : "Revenue & Billings"}</span>
+          </button>
         </aside>
 
         {/* Tab Contents */}

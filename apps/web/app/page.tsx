@@ -4,7 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n-context";
 import { useAuth } from "@/lib/auth-context";
-import { Play, Sparkles, Wand2, ArrowRight, ShieldCheck, Zap, Coins, Globe, X } from "lucide-react";
+import { Play, Sparkles, Wand2, ArrowRight, ShieldCheck, Zap, Coins, Globe } from "lucide-react";
+import { Button } from "../components/ui/Button";
+import { Modal } from "../components/ui/Modal";
 
 export default function LandingPage() {
   const { t, isRtl, lang, setLang } = useI18n();
@@ -12,7 +14,7 @@ export default function LandingPage() {
   const [showDemo, setShowDemo] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#070709] text-zinc-100 flex flex-col justify-between overflow-hidden relative" dir={isRtl ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-[#070709] text-zinc-100 flex flex-col justify-between overflow-hidden relative animate-fade-in" dir={isRtl ? "rtl" : "ltr"}>
       
       {/* Decorative Glows */}
       <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-purple-900/10 blur-[120px] pointer-events-none" />
@@ -28,35 +30,43 @@ export default function LandingPage() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => setLang(lang === "en" ? "ar" : "en")}
             className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg border border-white/5 bg-white/5 transition-colors"
           >
             <Globe className="h-3.5 w-3.5" />
             {lang === "en" ? "العربية" : "English"}
-          </button>
+          </Button>
 
           {user ? (
-            <Link
-              href="/dashboard"
-              className="text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
-            >
-              {t.common.dashboard}
-              <ArrowRight className="h-3.5 w-3.5" />
+            <Link href="/dashboard">
+              <Button
+                variant="primary"
+                size="sm"
+                className="font-bold flex items-center gap-1.5"
+              >
+                {t.common.dashboard}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Button>
             </Link>
           ) : (
-            <Link
-              href="/login"
-              className="text-xs font-bold border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-xl transition-all"
-            >
-              {t.common.login}
+            <Link href="/login">
+              <Button
+                variant="outline"
+                size="sm"
+                className="font-bold text-white"
+              >
+                {t.common.login}
+              </Button>
             </Link>
           )}
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="max-w-4xl w-full mx-auto px-6 text-center py-20 z-10 space-y-8 flex-1 flex flex-col justify-center">
+      <main className="max-w-4xl w-full mx-auto px-6 text-center py-20 z-10 space-y-8 flex-1 flex flex-col justify-center animate-slide-up">
         
         {/* Tagline Badge */}
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-400 text-xs font-semibold mx-auto w-fit shadow-[0_0_15px_rgba(139,92,246,0.1)]">
@@ -88,25 +98,30 @@ export default function LandingPage() {
 
         {/* Call to Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Link
-            href="/login"
-            className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-3.5 rounded-xl font-bold text-sm transition-all shadow-[0_0_30px_rgba(139,92,246,0.25)] flex items-center justify-center gap-2"
-          >
-            <span>{t.landing.getStarted}</span>
-            <ArrowRight className="h-4 w-4" />
+          <Link href="/login" className="w-full sm:w-auto">
+            <Button
+              variant="brand"
+              size="lg"
+              className="w-full font-bold flex items-center justify-center gap-2"
+            >
+              <span>{t.landing.getStarted}</span>
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </Link>
-          <button
+          <Button
+            variant="outline"
+            size="lg"
             onClick={() => setShowDemo(true)}
-            className="w-full sm:w-auto border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-850 hover:border-zinc-700 text-white px-8 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto font-bold flex items-center justify-center gap-2 border-zinc-800 bg-zinc-900/60 hover:bg-zinc-850 hover:border-zinc-700"
           >
             <Play className="h-4 w-4 text-purple-400" />
             <span>{t.landing.watchDemo}</span>
-          </button>
+          </Button>
         </div>
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-16 text-right">
-          <div className="p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md space-y-3">
+          <div className="p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md space-y-3 glass-card-hover">
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
               <Zap className="h-5 w-5" />
             </div>
@@ -118,7 +133,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md space-y-3">
+          <div className="p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md space-y-3 glass-card-hover">
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
               <Coins className="h-5 w-5" />
             </div>
@@ -130,7 +145,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md space-y-3">
+          <div className="p-6 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-md space-y-3 glass-card-hover">
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
               <ShieldCheck className="h-5 w-5" />
             </div>
@@ -150,31 +165,27 @@ export default function LandingPage() {
       </footer>
 
       {/* Demo Video Modal */}
-      {showDemo && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-zinc-950 border border-zinc-850 p-6 rounded-3xl max-w-md w-full text-center space-y-4 shadow-2xl relative">
-            <button
-              onClick={() => setShowDemo(false)}
-              className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            <h3 className="text-sm font-black text-white">{isRtl ? "شاهد طريقة العمل والتقطيع الذكي" : "Watch How Reframing Studio Works"}</h3>
-            <div className="aspect-[9/16] w-full max-w-[240px] mx-auto bg-black rounded-2xl overflow-hidden border border-white/5 relative">
-              <video
-                src="http://localhost:4000/static/videos/sample.mp4"
-                className="w-full h-full object-cover"
-                controls
-                autoPlay
-                playsInline
-              />
-            </div>
-            <p className="text-[10px] text-zinc-500">
-              {isRtl ? "مقطع تجريبي يوضح تحويل الفيديو الأصلي 16:9 إلى شورتس 9:16 ذكي مع تتبع تلقائي وتلوين الترجمة." : "Sample preview demonstrating 16:9 widescreen re-oriented into vertical 9:16 shorts with automated tracker and timed karaoke subtitles."}
-            </p>
+      <Modal
+        isOpen={showDemo}
+        onClose={() => setShowDemo(false)}
+        title={isRtl ? "شاهد طريقة العمل والتقطيع الذكي" : "Watch How Reframing Studio Works"}
+        size="sm"
+      >
+        <div className="space-y-4 text-center">
+          <div className="aspect-[9/16] w-full max-w-[220px] mx-auto bg-black rounded-2xl overflow-hidden border border-zinc-800/80 relative shadow-2xl">
+            <video
+              src="http://localhost:4000/static/videos/sample.mp4"
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              playsInline
+            />
           </div>
+          <p className="text-[11px] text-zinc-500 leading-relaxed">
+            {isRtl ? "مقطع تجريبي يوضح تحويل الفيديو الأصلي 16:9 إلى شورتس 9:16 ذكي مع تتبع تلقائي وتلوين الترجمة." : "Sample preview demonstrating 16:9 widescreen re-oriented into vertical 9:16 shorts with automated tracker and timed karaoke subtitles."}
+          </p>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }

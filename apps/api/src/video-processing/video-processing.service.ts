@@ -94,6 +94,11 @@ export class VideoProcessingService {
             duration: clip.duration,
             explanation: clip.explanation,
             words: clip.words,
+            reframeAspect: clip.reframeAspect,
+            layoutMode: clip.layoutMode,
+            reframeSettings: clip.reframeSettings,
+            trackingData: clip.trackingData,
+            cameraDecisions: clip.cameraDecisions,
           },
         });
       }
